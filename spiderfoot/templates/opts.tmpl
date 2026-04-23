@@ -59,11 +59,11 @@
         % endif
         % if type(opts[opt]) is bool:
         <%
-            if opts[opt] == True:
+            if opts[opt]:
                 seltrue = "selected"
                 selfalse = ""
             else:
-                selfalse = "selected"  
+                selfalse = "selected"
                 seltrue = ""
         %>
             <select id='${opt}' class='form-control'>
@@ -160,7 +160,7 @@
             % endif
             % if type(modopts[opt]) is bool:
             <%
-                if modopts[opt] == True:
+                if modopts[opt]:
                     seltrue = "selected"
                     selfalse = ""
                 else:

@@ -342,7 +342,7 @@ class SpiderFootDb:
             try:
                 rx = re.compile(qry, re.IGNORECASE | re.DOTALL)
                 ret = rx.match(data)
-            except Exception:
+            except (re.error, ValueError):
                 return False
             return ret is not None
 
@@ -387,7 +387,7 @@ class SpiderFootDb:
                             event, event_descr, event_raw, event_type
                         ))
                         self.conn.commit()
-                    except Exception:
+                    except (sqlite3.Error, ValueError):
                         continue
                 self.conn.commit()
 

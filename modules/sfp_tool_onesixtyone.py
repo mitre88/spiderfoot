@@ -155,7 +155,7 @@ class sfp_tool_onesixtyone(SpiderFootPlugin):
             try:
                 p = Popen(args, stdout=PIPE, stderr=PIPE)
                 out, stderr = p.communicate(input=None, timeout=60)
-                stdout = out.decode(sys.stdin.encoding)
+                stdout = out.decode('utf-8', errors='replace')
             except TimeoutExpired:
                 p.kill()
                 stdout, stderr = p.communicate()
