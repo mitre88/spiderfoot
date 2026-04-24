@@ -19,6 +19,7 @@ import json
 import os
 import re
 import shlex
+import subprocess
 import sys
 import time
 from os.path import expanduser
@@ -1326,7 +1327,15 @@ class SpiderFootCli(cmd.Cmd):
         """shell
         Run a shell command locally."""
         self.dprint("Running shell command:" + str(line))
-        self.dprint(os.popen(line).read(), plain=True)  # noqa: DUO106
+        try:
+            result = subprocess.run(line, shell=True, capture_output=True, text=True, timeout=30)
+            self.dprint(result.stdout, plain=True)
+            if result.stderr:
+                self.dprint("stderr: " + result.stderr, plain=True)
+        except subprocess.TimeoutExpired:
+            self.dprint("Command timed out after 30 seconds", plain=True)
+        except Exception as e:
+            self.dprint(f"Error running command: {e}", plain=True)
 
     def do_clear(self, line):
         """clear
