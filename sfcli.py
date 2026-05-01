@@ -152,10 +152,9 @@ class SpiderFootCli(cmd.Cmd):
             print(cout)
 
         if self.ownopts['cli.spool']:
-            f = codecs.open(self.ownopts['cli.spool_file'], "a", encoding="utf-8")
-            f.write(sout)
-            f.write('\n')
-            f.close()
+            with codecs.open(self.ownopts['cli.spool_file'], "a", encoding="utf-8") as f:
+                f.write(sout)
+                f.write('\n')
 
     # Shortcut commands
     def do_debug(self, line):

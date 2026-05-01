@@ -254,7 +254,7 @@ class ThreadPoolWorker(threading.Thread):
                     try:
                         result = callback(*args, **kwargs)
                         ran = True
-                    except Exception:  # noqa: B902
+                    except (Exception, KeyboardInterrupt, SystemExit):  # noqa: B902
                         import traceback
                         self.log.error(f'Error in thread worker {self.name}: {traceback.format_exc()}')
                         break
