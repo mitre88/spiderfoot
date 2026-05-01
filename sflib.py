@@ -1295,9 +1295,8 @@ class SpiderFoot:
             size = int(hdr.headers.get('content-length', 0))
             newloc = hdr.headers.get('location', url).strip()
 
-            # Relative re-direct
-            if newloc.startswith("/") or newloc.startswith("../"):
-                newloc = SpiderFootHelpers.urlBaseUrl(url) + newloc
+            # Relative re-direct - use urljoin to properly handle path traversal
+            newloc = urllib.parse.urljoin(url, newloc)
             result['realurl'] = newloc
             result['code'] = str(hdr.status_code)
 
