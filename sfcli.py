@@ -204,15 +204,13 @@ class SpiderFootCli(cmd.Cmd):
     # Run before all commands to handle history and spooling
     def precmd(self, line):
         if self.ownopts['cli.history'] and line != "EOF":
-            f = codecs.open(self.ownopts["cli.history_file"], "a", encoding="utf-8")
-            f.write(line)
-            f.write('\n')
-            f.close()
+            with codecs.open(self.ownopts["cli.history_file"], "a", encoding="utf-8") as f:
+                f.write(line)
+                f.write('\n')
         if self.ownopts['cli.spool']:
-            f = codecs.open(self.ownopts["cli.spool_file"], "a", encoding="utf-8")
-            f.write(self.prompt + line)
-            f.write('\n')
-            f.close()
+            with codecs.open(self.ownopts["cli.spool_file"], "a", encoding="utf-8") as f:
+                f.write(self.prompt + line)
+                f.write('\n')
 
         return line
 
